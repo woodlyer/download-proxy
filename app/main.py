@@ -31,8 +31,9 @@ black_list = '''
 pass_list = '''
 '''
 
-HOST = '127.0.0.1'  # 监听地址，建议监听本地然后由web服务器反代
-PORT = 80  # 监听端口
+# HOST = '127.0.0.1'  # 监听地址，建议监听本地然后由web服务器反代
+HOST = '0.0.0.0'   
+PORT = 81  # 监听端口
 ASSET_URL = 'https://hunshcn.github.io/gh-proxy'  # 主页
 
 white_list = [tuple([x.replace(' ', '') for x in i.split('/')]) for i in white_list.split('\n') if i]
@@ -119,6 +120,8 @@ def handler(u):
     if u.rfind('://', 3, 9) == -1:
         u = u.replace('s:/', 's://', 1)  # uwsgi会将//传递为/
     pass_by = False
+    return proxy(u)
+    # return 
     m = check_url(u)
     if m:
         m = tuple(m.groups())
